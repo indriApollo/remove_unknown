@@ -42,12 +42,17 @@ remove_unknown.rm = function(pos1,pos2)
 	local area = VoxelArea:new({MinEdge=emerged_pos1, MaxEdge=emerged_pos2})
 	local nodes = manip:get_data()
 	for i in area:iterp(pos1,pos2) do
-		local cur_pos = area:position(i)
-		local cur_node = minetest.get_node(cur_pos)
-		if not minetest.registered_nodes[cur_node.name] then
-			minetest.remove_node(cur_pos)
+		local cur_node = minetest.get_name_from_content_id(nodes[i])
+		if not minetest.registered_nodes[cur_node] then
+			nodes[i] = minetest.get_content_id("air") -- replace unknown with air
 			count = count + 1
 		end
 	end
+
+	-- write changes to map
+	manip:set_data(nodes)
+	manip:write_to_map()
+	manip:update_map()
+	
 	return count
 end
