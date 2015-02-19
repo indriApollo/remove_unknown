@@ -15,14 +15,14 @@ minetest.register_chatcommand("rm", {
 		local pos1 = {}
 		local pos2 = {}
 
-		if worldedit.pos1[name] and worldedit.pos2[name] then
-			pos1 = worldedit.pos1[name]
-			pos2 = worldedit.pos2[name]
-			pos1, pos2 = worldedit.sort_pos(pos1, pos2)
-		elseif radius and radius > 0 then
+		if radius and radius > 0 then
 			local playerpos = vector.round(player:getpos())
 			pos1 = vector.subtract(playerpos,radius) -- low left
 			pos2 = vector.add(playerpos,radius) -- top right
+		elseif worldedit.pos1[name] and worldedit.pos2[name] then
+			pos1 = worldedit.pos1[name]
+			pos2 = worldedit.pos2[name]
+			pos1, pos2 = worldedit.sort_pos(pos1, pos2)
 		else
 			minetest.chat_send_player(name,"Missing or invalid pos1/pos2/radius !")
 			return false
