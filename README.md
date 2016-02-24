@@ -9,7 +9,7 @@ Alternatively, you can use ```/rm <radius>```
 rm
 
 **Depends :**
--- none --
+worldedit
 
 **Licence :**
 GNU LGPL v2.1
